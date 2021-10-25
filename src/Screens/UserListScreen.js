@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
-import { Table,Button } from "react-bootstrap";
+import { Table,Button,Modal } from "react-bootstrap";
 import {useSelector, useDispatch} from 'react-redux'
 import {listUsers,deleteUsers} from '../Actions/userAction'
 import Message from '../Components/Message';
@@ -27,13 +27,23 @@ function UserListScreen({history}) {
         
     },[dispatch,history,successDelete])
 
+    const [show, setShow] = useState(false)
+    const handleClose= ()=>{
+        setShow(false)
+    }
+   
+    const handleShow= ()=>{
+       setShow(true)
+   }
+   
+
     const deleteHandler= (id)=>{
-        if(window.confirm(`Are you sure you want to delete user`))
-        {
             dispatch(deleteUsers(id))
-        }
+            setShow(false)
         
     }
+
+  
 
     return (
         <div>
@@ -70,9 +80,26 @@ function UserListScreen({history}) {
                                             <FaEdit/>
                                         </Button>
                                     </LinkContainer>
-                                    <Button variant="danger" onClick={()=> deleteHandler(user._id)}>
+                                    <Button variant="danger" onClick={()=> handleShow()}>
                                             <FaTrash/>
                                         </Button>
+                                        <Modal
+                                                show={show}
+                                                onHide={handleClose}
+                                                backdrop='static'
+                                                keyboard={false}
+
+                                                
+                                                >
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>Confirm Delete</Modal.Title>
+                                                    </Modal.Header>
+                                                    <Modal.Body>Are You Sure ,You want to Delete this Project</Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                                        <Button variant='danger' className='btn-sm'onClick={()=> deleteHandler(user._id)} >Delete</Button>
+                                                    </Modal.Footer>
+                                                </Modal>
                                 </td>
                                 
                             </tr>
