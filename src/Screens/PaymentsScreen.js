@@ -37,8 +37,8 @@ function PaymentsScreen({match,history}) {
     const purchasedTemplate = useSelector(state => state.purchasedTemplate)
     const {loading:loadingPuchase, error:errorPurchase,  success:purSuccesss} = purchasedTemplate
 
-    const Templatedownload = useSelector(state => state.Templatedownload)
-    const {loading:downloadLoading, error:downloadERROR, templateDownload} = Templatedownload
+   // const Templatedownload = useSelector(state => state.Templatedownload)
+   // const {loading:downloadLoading, error:downloadERROR, templateDownload} = Templatedownload
 
    
     
@@ -81,13 +81,13 @@ function PaymentsScreen({match,history}) {
 
     const handledownload = (id)=>{
         //dispatch(downloadTemplate(match.params.id))
-       // axios.get(`/api/template/file/${match.params.id}/`,{
-        //    responseType:  'blob',
+        axios.get(`${templatePurchase.templatefile}`,{
+            responseType:  'blob',
 
-       // }).then(res => {filedownload(res.data, `${templatePurchase.templatefile}`);
-   // console.log(res);}).catch(err=>{
-    //    console.log(err);
-    //})
+        }).then(res => {filedownload(res.data, `${templatePurchase.templatefile}`);
+    console.log(res);}).catch(err=>{
+        console.log(err);
+    })
     }
 
       
@@ -162,7 +162,7 @@ function PaymentsScreen({match,history}) {
                         <Row>
                           
                       
-                       <Button onClick={paymentSuccessHandler }>Pay Now texting button</Button>
+                       <Button onClick={paymentSuccessHandler,handledownload }>Pay Now texting button</Button>
                           
                       
                             

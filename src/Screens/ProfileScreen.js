@@ -1,7 +1,7 @@
 // @flow strict
 
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Table,Card,Container } from 'react-bootstrap'
+import { Form, Button, Row, Col, Table,Card,Modal } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Components/Loader'
@@ -59,7 +59,7 @@ function Profilescreen({history}) {
        }
        if(successCreateTemplate){
             
-        history.push(`/profile/${createdTemplate._id}/edit`)
+        history.push(`/admin/template/${createdTemplate._id}/edit`)
         
     }
     else{
@@ -82,18 +82,26 @@ function Profilescreen({history}) {
 
   
    const deleteHandler= (id)=>{
-    if (window.confirm('Are you sure you want to delete this project?')) {
-        dispatch(templateDelete(id))
-    }
+    
+     dispatch(templateDelete(id))
+     setShow(false)
+    
   console.log("deleted")
    }
 
    
    const createTemplateHandler= (e)=>{
-       dispatch(createTemplates())
+    dispatch(createTemplates())
     console.log("created")
 }
+ const [show, setShow] = useState(false)
+ const handleClose= ()=>{
+     setShow(false)
+ }
 
+ const handleShow= ()=>{
+    setShow(true)
+}
 
     
     
@@ -106,6 +114,7 @@ function Profilescreen({history}) {
     return (
         
         <div>
+            
           
             <Row>
             
@@ -132,15 +141,16 @@ function Profilescreen({history}) {
              <Col>
                     <h1>My Templates</h1>
                 </Col>
-
-                <Col className='text-right'>
+                
+            {userInfo.isAdmin && ( <Col className='text-right'>
                     <Button className='my-3' onClick={createTemplateHandler}>
                         <FaPlus/> Create Template
                     </Button>
-                </Col>
+                </Col>)}
+              
             </Row>
-           
-                <div>
+            {loadingMytemplate && (<Loader/>)}
+            {userInfo.isAdmin && (  <div>
                 <Table striped bordered hover responsive className='table-sm'>
                                 <thead>
                                     <tr>
@@ -176,15 +186,34 @@ function Profilescreen({history}) {
                                             )}</td>
 
                                          <td>
-                                             <LinkContainer to={`/profile/${template._id}/edit`}>
+                                             <LinkContainer to={`/admin/template/${template._id}/edit`}>
                                                  <Button variant='light' className='btn-sm'>
                                                     <FaEdit/>
                                                  </Button>
                                              </LinkContainer>
 
-                                             <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(template._id)}>
+                                             <Button variant='danger' className='btn-sm' onClick={handleShow}>
                                                  <FaTrash/>
                                              </Button>
+                                             <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop='static'
+            keyboard={false}
+
+            
+           >
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are You Sure ,You want to Delete this Project</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant='danger' className='btn-sm'onClick={()=> deleteHandler(template._id)} >Delete</Button>
+                </Modal.Footer>
+            </Modal>
+           
+                                           
                                          </td>
                                      </tr>
                                  
@@ -192,7 +221,8 @@ function Profilescreen({history}) {
                                        
                                 </tbody>
                             </Table>
-                </div>
+                </div> )}
+              
             
              
              </Col>

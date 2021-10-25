@@ -13,6 +13,9 @@ import StepTwoRegisterScreen from './Screens/StepTwoRegisterScreen';
 import TemplateEditScreen from './Screens/templateEditScreen';
 import PaymentsScreen from './Screens/PaymentsScreen';
 import PurchasedTemplateScreen from './Screens/PurchasedTemplateScreen';
+import UserListScreen from './Screens/UserListScreen';
+import UserEditScreen from './Screens/UserEditScreen';
+import TemplateListScreen from './Screens/TemplateListScreen';
 function App() {
   return (
     <Router>
@@ -21,14 +24,18 @@ function App() {
       <Container>
         <Route path="/" component={HomeScreen} exact/>
         <Route path='/template/:id' component={TemplateScreen} />
-        <Route path='/profile/:id/edit' component={TemplateEditScreen} />
+        <Route path='/admin/template/:id/edit' component={TemplateEditScreen} />
         
         <Route path="/login" component={LoginScreen}/>
         <Route path='/register' component={RegisterScreen} exact/>
         <Route path='/register/two' component={StepTwoRegisterScreen} />
+        <Route path='/admin/userlist/' component={UserListScreen} />
         <Route path='/profile' component={Profilescreen} exact/>
         <Route path='/payment/:id/' component={PaymentsScreen} />
         <Route path='/download/:id/' component={PurchasedTemplateScreen} />
+        <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+        <Route path='/admin/templatelist/' component={TemplateListScreen} />
+        
         
 
 

@@ -47,6 +47,26 @@ function Header() {
                                 <Nav.Link><FaUser style={{margin: "5"}}/>Login</Nav.Link>
                             </LinkContainer>}
 
+                            {userInfo && userInfo.isAdmin && (
+                                <NavDropdown title='Admin' id='adminmenu'>
+                                    <LinkContainer to='/admin/userlist'>
+                                        <NavDropdown.Item>
+                                            Users
+                                        </NavDropdown.Item>
+                                    
+                                    </LinkContainer>
+                                    <LinkContainer to='/admin/templatelist'>
+                                        <NavDropdown.Item>
+                                            Template
+                                        </NavDropdown.Item>
+                                    
+                                    </LinkContainer>
+                                   
+                                </NavDropdown>
+                            )}
+                           
+
+
 
 
 

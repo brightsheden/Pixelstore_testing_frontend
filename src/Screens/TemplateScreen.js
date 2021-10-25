@@ -13,9 +13,11 @@ import Message from '../Components/Message';
 import { LinkContainer } from 'react-router-bootstrap';
 import { createTemplateReview } from '../Actions/templateAction';
 import { REVIEW_TEMPLATE_RESET } from '../Constants/templateConstant';
+import axios from 'axios'
 
 //import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
+var filedownload = require('js-file-download')
 function TemplateScreen({match,history}) {
     //const product = products.find((p)=> p._id === match.params.id)
 
@@ -63,6 +65,16 @@ function TemplateScreen({match,history}) {
 
 }
 
+const handledownload = (id)=>{
+    //dispatch(downloadTemplate(match.params.id))
+    axios.get(`${template.templatefile}`,{
+        responseType:  'blob',
+
+    }).then(res => {filedownload(res.data, `${template.templatefile}`);
+console.log(res);}).catch(err=>{
+    console.log(err);
+})
+}
 
    
 
@@ -120,7 +132,7 @@ function TemplateScreen({match,history}) {
                         </Row>}
                         {!template.is_paid &&  <Row>
                             <Col> Price:</Col>
-                            <Col>$0.00</Col>
+                            <Col>Free</Col>
                         </Row>}
                         
 
@@ -136,10 +148,8 @@ function TemplateScreen({match,history}) {
                ): <ListGroup.Item>
                         
                <h3>File/code</h3>
-               
-               <a href={template.templatefile} download>
-                   Download
-               </a>
+               <Button onClick={handledownload}>Download</Button>
+              
                
                 
            </ListGroup.Item>

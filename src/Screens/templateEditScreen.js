@@ -47,7 +47,7 @@ function TemplateEditScreen({match, history}) {
                 dispatch(listTemplateDestails(templateId))
             } else {
                 setTitle(template.title)
-                setThumbnail(template.demolink)
+                setThumbnail(template.thumbnail)
                 setCategory(template.category)
                 setPrice(template.price)
                 setImage1(template.image1)
@@ -165,7 +165,7 @@ function TemplateEditScreen({match, history}) {
             const config = {
                 "content-type" : "multipart/form/data"
             }
-            const {data} =await axios.post("/api/template/screenshot1/", formData,config)
+            const {data} =await axios.post("/api/template/screenshot2/", formData,config)
             setUploading(false)
             setImage2(data)
         } catch (error) {
@@ -239,7 +239,7 @@ function TemplateEditScreen({match, history}) {
                             (
                                 <Form onSubmit={submitHandler}>
 
-                            <Form.Group controlId='name'>
+                            <Form.Group controlId='title'>
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control
 
@@ -255,9 +255,8 @@ function TemplateEditScreen({match, history}) {
                             <Form.Group controlId='image'>
                                 <Form.Label>Image</Form.Label>
                                 <Form.Control
-
                                     type='text'
-                                    placeholder='Enter image'
+                                    placeholder='choose image'
                                     value={thumbnail}
                                     onChange={(e) => setThumbnail(e.target.value)}
                                 >   
@@ -297,13 +296,13 @@ function TemplateEditScreen({match, history}) {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group controlId='image'>
+                            <Form.Group controlId='image1'>
                                 <Form.Label>screenshot1</Form.Label>
                                 <Form.Control
 
                                     type='text'
                                     placeholder='choose screenshot1'
-                                    value={thumbnail}
+                                    value={image1}
                                     onChange={(e) => setImage1(e.target.value)}
                                 >   
                                 </Form.Control>
